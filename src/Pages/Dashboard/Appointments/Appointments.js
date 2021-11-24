@@ -9,6 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 
 const Appointments = ({ date }) => {
@@ -50,11 +51,24 @@ const Appointments = ({ date }) => {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
 
-                                <TableCell align="left">{index + 1}</TableCell>
-                                <TableCell align="left">{row.patientName}</TableCell>
-                                <TableCell align="left">{row.time}</TableCell>
-                                <TableCell align="left">{row.serviceName}</TableCell>
-                                <TableCell align="left"><Button> Delete</Button></TableCell>
+                                <TableCell align="left">
+                                    {index + 1}
+                                </TableCell>
+                                <TableCell align="left">
+                                    {row.patientName}
+                                </TableCell>
+                                <TableCell align="left">
+                                    {row.time}
+                                </TableCell>
+                                <TableCell align="left">
+                                    {row.serviceName}
+                                </TableCell>
+                                <TableCell align="left">
+                                    {row?.payment ? "Paid" :
+                                        <Link to={`/dashboard/payment/${row._id}`}>
+                                            <Button>Pay</Button>
+                                        </Link>}
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

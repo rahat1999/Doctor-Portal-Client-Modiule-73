@@ -25,14 +25,14 @@ const useFirebase = () => {
     const [token, setToken] = useState('');
 
     /* =========LogIn with Google========= */
-    const loginWithGoogle = (location, history) => {
+    const loginWithGoogle = (location, navigate) => {
         setIsLoading(true)
         signInWithPopup(auth, provider)
             .then((result) => {
                 const user = result.user;
                 saveUserToDB(user.email, user.displayName, 'PUT')
                 const destination = location.state?.from || '/';
-                history.replace(destination)
+                navigate(destination)
                 setAuthError('')
             }).catch((error) => {
                 setAuthError(error.message);
@@ -41,7 +41,7 @@ const useFirebase = () => {
     }
 
     /* =========== User Register ========*/
-    const registerUser = (email, password, name, history,) => {
+    const registerUser = (email, password, name, navigate,) => {
         setIsLoading(true)
         createUserWithEmailAndPassword(auth, email, password)
             .then((result) => {
@@ -59,7 +59,7 @@ const useFirebase = () => {
                 }).catch((error) => {
 
                 });
-                history.replace('/')
+                navigate('/')
             })
             .catch((error) => {
                 setAuthError(error.message)
@@ -67,12 +67,12 @@ const useFirebase = () => {
             .finally(() => setIsLoading(false))
     }
     /*======= login withEmail and Password ========*/
-    const loginWithEmailAndPassword = (email, password, location, history) => {
+    const loginWithEmailAndPassword = (email, password, location, navigate) => {
         setIsLoading(true)
         signInWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 const destination = location.state?.from || '/';
-                history.replace(destination)
+                navigate(destination)
                 setAuthError('')
             })
             .catch((error) => {
@@ -80,6 +80,12 @@ const useFirebase = () => {
             })
             .finally(() => setIsLoading(false))
     }
+    //*-----find admin----*//
+    useEffect(() => {
+        fetch(`https://dry-harbor-11353.herokuapp.com/users/${user.email}`)
+            .then(res => res.json())
+            .then(data => setAdmin(data.admin))
+    }, [user.email])
 
     //*-----find admin----*//
     useEffect(() => {

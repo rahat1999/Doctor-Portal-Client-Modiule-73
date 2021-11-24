@@ -9,12 +9,15 @@ const Bookings = ({ booking, date, setBookingSuccess }) => {
 
     return (
         <>
-            <Grid item xs={8} sm={6} md={4} sx={{ textAlign: "center" }}>
+            <Grid item xs={8} sm={6} md={4} sx={{ textAlign: "center", mb: 5 }}>
 
                 <Paper elevation={3} sx={{ py: 4 }} >
                     <Typography style={{ color: "#1BB7E1", fontWeight: '600px' }}
                         gutterBottom variant="h5" component="div">
                         {booking.name}
+                    </Typography>
+                    <Typography variant="h6" color="text.secondary">
+                        Price: ${booking.price}
                     </Typography>
                     <Typography variant="h6" color="text.secondary">
                         {booking.time}
